@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>SNUMSP</title>
+  </head>
+  <body>
+    <div class="p-3 mb-2 bg-dark text-white d-flex justify-content-center">Shiv Nadar University Semester Marksheet Downloader</div>
+    <!--Form to query the results of the students-->
+    <div class="container">
+      <form action="/" method="POST">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Registration Number</label>
+          <input type="integer" class="form-control" name="rnoin" id="rnoin" placeholder="Enter Registration No.">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Semester</label>
+          <input type="integer" class="form-control" name="semin" id="semin" placeholder="Enter Semester No.">
+        </div>
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary" style="border-radius: 0%;background-color: black;">SEARCH</button>
+        </div>
+      </form>
+    </div>
+    <br>
+    <br>
+    {% if results %}
+    <!--Displaying the queried data-->
+    <div class = "d-flex justify-content-center">
+      <p class="text-uppercase text-dark" style="font-weight: bold;">student details</p>
+    </div>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Registration Number</th>
+          <th>Semester</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ results[0].name }}</td>
+          <td>{{ results[0].regno }}</td>
+          <td>{{ results[0].semester }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <div class = "d-flex justify-content-center">
+      <p class="text-uppercase text-dark" style="font-weight: bold;">Results</p>
+    </div>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Course Name</th>
+          <th>Grade</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for result in results %}
+        <tr>
+            <td>{{ result.coursename }}</td>
+            <td>{{ result.grade }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <!--PDF Generation Button-->
+    <div class="container">
+      <form action="/generate" method="POST">
+        <div class="d-flex justify-content-center">
+          <input type="hidden" name="results" id="results" value="{{ results }}">
+          <button type="submit" class="btn btn-primary" style="border-radius: 0%;background-color: black;">GENERATE PDF</button>
+        </div>
+      </form>
+    </div>
+    {% else %}
+    <div class = "d-flex justify-content-center">
+      <p class="text-uppercase text-dark" style="font-weight: bold;">Registration Number not found or Invalid Semesters</p>
+    </div>
+    {% endif %}
+    <br>
+    <br>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>
